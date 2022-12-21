@@ -1,7 +1,7 @@
 import { Schema, model, models } from 'mongoose'
 
 
-const createAccNum = () => { return Math.floor(1 + Math.random() * 100000000000000) }
+const createAccNum = () => (Math.floor(1 + Math.random() * 100000000000000))
 
 
 const userSchema = new Schema({
@@ -15,11 +15,12 @@ const userSchema = new Schema({
         state: String,
         houseDetails: String
     },
-    aadhar: Number,
+    aadhar: { type: Number, required: true },
     accountNumber: {
         type: Number,
         default: createAccNum()
     },
+    blackList: [String]
 })
 
 const Users = models.user || model('user', userSchema)
