@@ -40,6 +40,7 @@ const account = () => {
           <h1 className=" underline">Transaction Details</h1>
         </div>
         <div className="flex flex-col w-full overflow-x-auto">
+
           <div className="pt-2 inline-block w-full">
             <table className="min-w-full text-center">
               <thead className="border-b">
@@ -70,6 +71,7 @@ const account = () => {
                   </th>
                   <th
                     scope="col"
+
                     className="text-sm font-medium text-gray-900 px-2 py-4"
                   >
                     Balance(₹)
