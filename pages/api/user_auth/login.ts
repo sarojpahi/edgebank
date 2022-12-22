@@ -19,9 +19,9 @@ export default async function handler(
   const { userName, password } = req.body
   try {
     await dbConnect()
-    const existing = await Users.findOne({ userName, password })
     if (req.method === 'POST') {
-      if (existing) {
+      const existing = await Users.findOne({ userName })
+      if (await argon.verify(existing.password, password)) {
         if (await argon.verify(existing.password, password)) {
           const verification = jwt.sign(
             { userName, userId: existing._id, email: existing.email },
@@ -54,9 +54,14 @@ export default async function handler(
           message: 'something went wrong!',
         })
       }
+    } else {
+      return res.json({
+        status: 0,
+        message: 'wrong method!',
+      })
     }
   } catch (error) {
-    res.json(error)
     console.log(error)
+    return res.json(error)
   }
 }

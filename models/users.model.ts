@@ -9,7 +9,7 @@ type AddressType = {
   houseDetails: string
 }
 
-type UserType = {
+export type UserType = {
   userName: string
   mobile: number
   email: string
@@ -19,6 +19,7 @@ type UserType = {
   accountNumber: number
   image: string
   blackList: Array<String>
+  beneficiary: Array<String>
 }
 
 const userSchema = new Schema<UserType>({
@@ -39,6 +40,7 @@ const userSchema = new Schema<UserType>({
   },
   image: String,
   blackList: [String],
+  beneficiary: [String],
 })
 
 const Users = models.user || model('user', userSchema)

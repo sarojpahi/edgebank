@@ -18,13 +18,19 @@ type Verification = {
 
 const logout = async (req: NextApiRequest, res: NextApiResponse) => {
   const { auth_cookie }: any = req.cookies
-  const verification = jwt.verify(
-    auth_cookie,
-    process.env.JWT_SECRET,
-  ) as Verification
   try {
     await dbConnect()
     if (req.method === 'POST') {
+      if (!auth_cookie) {
+        return res.json({
+          status: 0,
+          message: 'already logged out!',
+        })
+      }
+      const verification = jwt.verify(
+        auth_cookie,
+        process.env.JWT_SECRET,
+      ) as Verification
       await Users.updateOne(
         { _id: verification.userId },
         { $push: { blackList: auth_cookie } },
