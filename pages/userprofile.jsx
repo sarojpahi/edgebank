@@ -1,18 +1,55 @@
 import {
   Avatar,
+  Box,
   Button,
   Flex,
   Grid,
   Heading,
+  HStack,
   Input,
-  Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 function UserProfile() {
+  const [form, setForm] = useState({
+    userName: "",
+    city: "",
+    state: "",
+    pin: "",
+    email: "",
+    houseDetails: "",
+  });
+  const [image, setImage] = useState("");
+  const [data, setData] = useState([]);
+  const [loading, setloading] = useState(false);
+
+  const handleChangeImage = (e) => {
+    const data = new FormData();
+    data.append("file", e.target.files[0]);
+    data.append("upload_preset", "Facebook");
+    data.append("cloud_name", "dhxtxmw5n");
+    setloading(true);
+    axios
+      .post(`https://api.cloudinary.com/v1_1/dhxtxmw5n/image/upload`, data)
+      .then((res) => {
+        setImage(res.data.url);
+        setloading(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdate = () => {
+    // axios.post;
+  };
+
   return (
-    <>
+    <Box mt="10" pb="10">
       <Grid
         gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
         w="80%"
@@ -24,7 +61,11 @@ function UserProfile() {
             size="3xl"
             src="https://avatars.githubusercontent.com/u/107462720?v=4"
           />
-          <Input type="file" />
+          <Input
+            type="file"
+            value={image}
+            onChange={(e) => handleChangeImage(e)}
+          />
         </VStack>
         <VStack h="full" align="start" px="10" py="0">
           <Flex w="full" justifyContent={"center"}>
@@ -39,28 +80,117 @@ function UserProfile() {
               USER DETAILS
             </Heading>
           </Flex>
-          <Text>Name : Akshay rajput</Text>
-          <Input type="text" placeholder="Enter Updated name" />
-          <Text>password : Password</Text>
-          <Input type="text" placeholder="Enter Updated password" />
-          <Text>Location : Location , pinCode : PinCode</Text>
-          <Input type="text" placeholder="Enter Updated PinCode" />
-          <Button
-            w="full"
-            bgColor="rgba(255, 49, 109, 0.7)"
-            size="sm"
-            _hover={{ bgColor: "rgba(255, 49, 109, 0.7)" }}
-            letterSpacing={"1.3px"}
-            fontWeight="500"
-            fontSize="14px"
-            color="white"
-          >
-            {" "}
-            Update profile
-          </Button>
+          <VStack gap="2" pt="5" align={"start"}>
+            <Heading fontWeight={"500"} size="sm">
+              Name : <span style={{ fontWeight: "400" }}>Akshay Rajput</span>
+            </Heading>
+            <Heading fontWeight={"500"} size="sm">
+              Email :{" "}
+              <span style={{ fontWeight: "400" }}>
+                akshay.rajput1197@gmail.com
+              </span>
+            </Heading>
+            <Heading fontWeight={"500"} size="sm">
+              Acc Number : <span style={{ fontWeight: "400" }}>123456789</span>
+            </Heading>
+            <Heading fontWeight={"500"} size="sm">
+              Mobile Number :{" "}
+              <span style={{ fontWeight: "400" }}>124324234</span>
+            </Heading>
+            <Heading fontWeight={"500"} size="sm">
+              Aadhar Number :{" "}
+              <span style={{ fontWeight: "400" }}>124324234</span>
+            </Heading>
+            <HStack>
+              <Heading fontWeight={"500"} size="sm">
+                City : <span style={{ fontWeight: "400" }}>address</span>
+              </Heading>
+              <Heading fontWeight={"500"} size="sm">
+                pin : <span style={{ fontWeight: "400" }}>address</span>
+              </Heading>
+            </HStack>
+            <HStack>
+              <Heading fontWeight={"500"} size="sm">
+                State : <span style={{ fontWeight: "400" }}>address</span>
+              </Heading>
+              <Heading fontWeight={"500"} size="sm">
+                HouseDetails :{" "}
+                <span style={{ fontWeight: "400" }}>address</span>
+              </Heading>
+            </HStack>
+          </VStack>
+          <VStack align="start" pt="5" w="full">
+            <label>Name :</label>
+            <Input
+              size="sm"
+              name="name"
+              value={form.name}
+              type="text"
+              onChange={(e) => handleChange(e)}
+              placeholder="Enter Updated name"
+            />
+            <label>Email :</label>
+            <Input
+              name="email"
+              value={form.email}
+              size="sm"
+              type="text"
+              placeholder="Enter Updated email address"
+              onChange={(e) => handleChange(e)}
+            />
+            <label>Address :</label>
+            <HStack>
+              <Input
+                size="sm"
+                name="city"
+                value={form.city}
+                type="text"
+                placeholder="Enter City"
+                onChange={(e) => handleChange(e)}
+              />
+              <Input
+                size="sm"
+                name="pin"
+                value={form.pin}
+                type="text"
+                placeholder="Enter PinCode"
+                onChange={(e) => handleChange(e)}
+              />
+              <Input
+                size="sm"
+                name="state"
+                value={form.state}
+                type="text"
+                placeholder="Enter State"
+                onChange={(e) => handleChange(e)}
+              />
+              <Input
+                size="sm"
+                name="houseDetails"
+                value={form.houseDetails}
+                type="text"
+                placeholder="Enter HouseDetails"
+                onChange={(e) => handleChange(e)}
+              />
+            </HStack>
+            <Button
+              w="full"
+              bgColor="rgba(255, 49, 109, 0.7)"
+              size="sm"
+              _hover={{ bgColor: "rgba(255, 49, 109, 0.7)" }}
+              letterSpacing={"1.3px"}
+              fontWeight="500"
+              fontSize="14px"
+              color="white"
+              onClick={() => handleUpdate()}
+            >
+              {" "}
+              Update profile
+            </Button>
+          </VStack>
         </VStack>
       </Grid>
-    </>
+    </Box>
   );
 }
 

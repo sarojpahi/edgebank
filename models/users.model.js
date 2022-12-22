@@ -3,7 +3,6 @@ import { Schema, model, models } from 'mongoose'
 
 const createAccNum = () => { return Math.floor(1 + Math.random() * 100000000000000) }
 
-
 const userSchema = new Schema({
     userName: { type: String, unique: true, required: true },
     mobile: Number,
