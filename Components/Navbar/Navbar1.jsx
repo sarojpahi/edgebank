@@ -16,6 +16,7 @@ const Navbar = () => {
             alt="Edge Bank"
           />
         </Link>
+
       </div>
       <div className="hidden lg:flex w-[calc(100%-186px)]">
         <div className="w-full gap-3 items-center justify-between px-4 lg:px-40 flex">
