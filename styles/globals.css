@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#registerform label {
+  font-weight: 500;
+}
+#registerform input {
+  width: 100%;
+  border: 1px solid #d7dfe5;
+  height: 35px;
+  border-radius: 5px;
+  padding: 0 10px;
+  outline: none;
+}
+#loginform label {
+  font-weight: 500;
+}
+#loginform input {
+  width: 100%;
+  border: 1px solid #d7dfe5;
+  height: 40px;
+  border-radius: 5px;
+  padding: 0 10px;
+  outline: none;
+}
+#loginform input[type="submit"],
+#registerform input[type="submit"] {
+  cursor: pointer;
+  transition: all 0.4s;
+}
+#loginform input[type="submit"]:hover,
+#registerform input[type="submit"]:hover {
+  background: #d7dfe5;
+}
