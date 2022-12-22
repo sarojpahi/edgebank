@@ -2,7 +2,22 @@ import React from "react";
 import { TR } from "../../Components/TR";
 
 const account = () => {
-  let data = [];
+  let data = [
+    {
+      status: "credit",
+      name: "Self",
+      id: "123456789100000",
+      amount: 20000,
+      balance: 20000,
+    },
+    {
+      status: "debit",
+      name: "Self",
+      id: "1234",
+      amount: 20000,
+      balance: 0,
+    },
+  ];
   return (
     <div className="w-[98%] mx-auto sm:w-full">
       <div className="sm:my-0 my-4 border rounded-lg flex flex-col justify-center items-center border-gray-200 lg:p-4 p-2">
@@ -25,7 +40,7 @@ const account = () => {
           <h1 className=" underline">Transaction Details</h1>
         </div>
         <div className="flex flex-col w-full overflow-x-auto">
-          <div className="py-2 inline-block w-full">
+          <div className="pt-2 inline-block w-full">
             <table className="min-w-full text-center">
               <thead className="border-b">
                 <tr>
@@ -55,7 +70,7 @@ const account = () => {
                   </th>
                   <th
                     scope="col"
-                    className="text-sm font-medium text-gray-900  py-4"
+                    className="text-sm font-medium text-gray-900 px-2 py-4"
                   >
                     Balance(₹)
                   </th>

@@ -9,11 +9,13 @@ const Navbar = () => {
   return (
     <div className="h-[60px] flex items-center px-10 bg-gradient-to-r from-indigo-200 via-purple-500 to-pink-500">
       <div className="lg:px-4 lg:w-max w-full flex justify-center ">
-        <img
-          className="w-[160px] "
-          src="https://user-images.githubusercontent.com/107534043/208931176-27398e7e-6d50-4729-8415-8e0403eaac57.png"
-          alt="Edge Bank"
-        />
+        <Link href={"/"}>
+          <img
+            className="w-[160px] "
+            src="https://user-images.githubusercontent.com/107534043/208931176-27398e7e-6d50-4729-8415-8e0403eaac57.png"
+            alt="Edge Bank"
+          />
+        </Link>
       </div>
       <div className="hidden lg:flex w-[calc(100%-186px)]">
         <div className="w-full gap-3 items-center justify-between px-4 lg:px-40 flex">
