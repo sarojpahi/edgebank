@@ -38,6 +38,7 @@ export default async function handler(req, res) {
         houseDetails,
         aadhar,
         id,
+        image,
       } = req.body;
       let user = await Users.findByIdAndUpdate(
         { _id: id },
@@ -52,6 +53,7 @@ export default async function handler(req, res) {
             "address.state": state,
             "address.houseDetails": houseDetails,
             aadhar,
+            image,
           },
         }
       );
