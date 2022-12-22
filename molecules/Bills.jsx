@@ -6,40 +6,64 @@ const Bills = ({ data, heading1, gap }) => {
     <Box w="83%" m="auto" pt="4rem" pb="5rem">
       <Box>
         <SubHeading SubHeading={heading1} />
-        <Flex gap={gap}>
+        <Flex
+          gap={gap}
+          flexDirection={{ base: "column", lg: "unset" }}
+          justifyContent={{ base: "center", lg: "unset" }}
+        >
           {data.map(({ src, title, description, heading }) => {
             return (
-              <Box py=".8rem" pl=".8rem" pr="1rem">
+              <Flex
+                py=".8rem"
+                pl=".8rem"
+                pr="1rem"
+                direction={"column"}
+                justifyContent={{ base: "center", lg: "center" }}
+              >
                 <Box>
-                  <Image src={src} alt={title} w="64px" h="64px" />
+                  <Flex justifyContent={{ base: "center", lg: "unset" }}>
+                    <Image
+                      src={src}
+                      alt={title}
+                      w={{ base: "70px", md: "150px", lg: "64px" }}
+                      h={{ base: "70px", md: "150px", lg: "64px" }}
+                    />
+                  </Flex>
+                  <Flex
+                    mt="1rem"
+                    direction={"column"}
+                    justifyContent={{ base: "center", lg: "unset" }}
+                  >
+                    <Text
+                      fontSize={{ md: "23px", lg: "17px" }}
+                      fontWeight="500"
+                      fontFamily="poppins"
+                      color="white"
+                      textAlign={{ base: "center", lg: "unset" }}
+                    >
+                      {title}
+                    </Text>
+                    <Text
+                      fontSize={{ md: "22px", lg: "17px" }}
+                      fontWeight="500"
+                      fontFamily="poppins"
+                      color="white"
+                      textAlign={{ base: "center", lg: "unset" }}
+                    >
+                      {heading}
+                    </Text>
+                    <Text
+                      fontSize={{ md: "22px", lg: "15px" }}
+                      fontWeight="500"
+                      fontFamily="poppins"
+                      color="white"
+                      textAlign={{ base: "center", lg: "unset" }}
+                    >
+                      {description}
+                    </Text>
+                  </Flex>
                 </Box>
-                <Box mt="1rem">
-                  <Text
-                    fontSize="17px"
-                    fontWeight="500"
-                    fontFamily="poppins"
-                    color="white"
-                  >
-                    {title}
-                  </Text>
-                  <Text
-                    fontSize="17px"
-                    fontWeight="500"
-                    fontFamily="poppins"
-                    color="white"
-                  >
-                    {heading}
-                  </Text>
-                  <Text
-                    fontSize="15px"
-                    fontWeight="500"
-                    fontFamily="poppins"
-                    color="white"
-                  >
-                    {description}
-                  </Text>
-                </Box>
-              </Box>
+              </Flex>
             );
           })}
         </Flex>

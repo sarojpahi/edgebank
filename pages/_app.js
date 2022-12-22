@@ -1,11 +1,11 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import Navbar from "../Components/Navbar/Navbar";
+import Nav from "../Components/Navbar/Nav";
 import "../styles/global.css";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <Navbar />
+      <Nav />
       <Component {...pageProps} />
       {/* <Footer /> */}
     </ChakraProvider>

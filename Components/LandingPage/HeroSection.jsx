@@ -9,8 +9,9 @@ const HeroSection = () => {
     <Box mt="3rem">
       <Box bg="white">
         <Grid
-          w="91%"
-          pb="5rem"
+          w={{ base: "100%", md: "100%", lg: "91%" }}
+          pb={{ base: "2rem", lg: "5rem" }}
+          // m={{ base: "auto", lg: "unset" }}
           ml={{ lg: "auto" }}
           gridTemplateColumns={{
             base: "1fr",
@@ -19,7 +20,7 @@ const HeroSection = () => {
             lg: "1fr .8fr",
           }}
           gap={{ base: "5rem", sm: "5rem", md: "", lg: "15rem" }}
-          pt="7rem"
+          pt={{ lg: "7rem" }}
         >
           <Flex align={{ base: "center", lg: "unset" }} flexDirection="column">
             <Box>
@@ -36,7 +37,10 @@ const HeroSection = () => {
                 maxWidth="30rem"
               />
             </Box>
-            <Box>
+            <Box
+              px={{ base: "1rem", lg: "unset" }}
+              textAlign={{ base: "center", lg: "none" }}
+            >
               <Description
                 maxWidth="32rem"
                 description="Recharge & pay bills, book flights & movie tickets, open a savings account, invest in stocks & mutual funds, and do a lot more."

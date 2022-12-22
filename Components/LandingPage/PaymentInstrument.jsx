@@ -8,7 +8,11 @@ import PostPaid from "./PostPaid";
 
 const PaymentInstrument = () => {
   return (
-    <Box w="70%" m="auto" py="6rem">
+    <Box
+      w={{ base: "95%", md: "90%", lg: "70%" }}
+      m="auto"
+      py={{ base: "2rem", md: "4rem", lg: "6rem" }}
+    >
       <Heading heading="Paytm Payment Instruments" />
       <OnlinePayment />
       <PostPaid />

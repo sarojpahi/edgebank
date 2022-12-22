@@ -8,6 +8,7 @@ const SubHeading = ({ SubHeading }) => {
       fontWeight="600"
       fontFamily="poppins"
       mb="1rem"
+      textAlign={{ md: "center", lg: "unset" }}
     >
       {SubHeading}
     </Text>

@@ -14,8 +14,8 @@ import {
   MenuOptionGroup,
   MenuDivider,
 } from "@chakra-ui/react";
-import { FaUserCircle } from "react-icons/fa";
 
+import { FaUserCircle } from "react-icons/fa";
 const Navbar = () => {
   return (
     <Box bg="white" boxShadow="0 5px 20px rgb(0 41 112 / 10%)">
@@ -49,7 +49,6 @@ const Navbar = () => {
                 </MenuButton>
                 <MenuList>
                   <MenuItem fontWeight={"600"}>Consumer Payment</MenuItem>
-                  <MenuItem fontWeight={"600"}>Busicness Payment</MenuItem>
                   <MenuItem fontWeight={"600"}>Business Software</MenuItem>
                   <MenuItem fontWeight={"600"}>Financial Services</MenuItem>
                   <MenuItem fontWeight={"600"}>Developer</MenuItem>

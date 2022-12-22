@@ -4,7 +4,6 @@ import HeroSection from "../Components/LandingPage/HeroSection";
 import BillAndRecharge from "../Components/LandingPage/BillAndRecharge";
 import PaymentInstrument from "../Components/LandingPage/PaymentInstrument";
 import FinancialService from "../Components/LandingPage/FinancialService";
-import Goals from "../Components/LandingPage/Goals";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +14,6 @@ export default function Home() {
       <BillAndRecharge />
       <PaymentInstrument />
       <FinancialService />
-      {/* <Goals /> */}
     </Box>
   );
 }
