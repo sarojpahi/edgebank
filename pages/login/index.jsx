@@ -51,7 +51,7 @@ const index = () => {
             <input type="password" placeholder="Password" />
             <label>Verify Captcha</label>
             <div className="flex gap-4 items-center">
-              <div className="w-full">Captcha</div>{" "}
+              <div className="w-full">Captcha</div>
               <input type="text" placeholder="" />
             </div>
 

@@ -1,12 +1,5 @@
 import React from "react";
-const random_bg_color = () => {
-  var x = Math.floor(Math.random() * 256);
-  var y = Math.floor(Math.random() * 256);
-  var z = Math.floor(Math.random() * 256);
-  var bgColor = "rgb(" + x + "," + y + "," + z + ")";
 
-  return bgColor;
-};
 const Card1 = ({ avatar, name, time, msg, noti, bg }) => {
   return (
     <div className="w-full border-b border-[#d7dfe5] p-3">

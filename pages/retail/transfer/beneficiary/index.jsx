@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BenificiaryList } from "./BenificiaryList";
 import { BenficiaryContainer } from "./BenficiaryContainer";
+import axios from "axios";
+import { io } from "socket.io-client";
+
 const random_bg_color = () => {
   var x = Math.floor(Math.random() * 256);
   var y = Math.floor(Math.random() * 256);
@@ -28,14 +31,23 @@ const data = [
   },
 ];
 const index = () => {
-  const [input, setInput] = useState("");
-
+  const socket = useRef();
   const [currentChat, setCurrentChat] = useState();
-
+  const [currentUser, setCurrentuser] = useState({
+    _id: "12345",
+  });
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
     console.log("chat", chat);
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io("/api/socket");
+      socket.current.emit("add-user", currentUser._id);
+    }
+  }, [currentUser]);
+
   console.log("currentChat", currentChat);
   return (
     <div id="payment">
@@ -51,7 +63,11 @@ const index = () => {
           </div>
           <BenificiaryList changeChat={handleChatChange} contacts={data} />
         </div>
-        <BenficiaryContainer setInput={setInput} currentChat={currentChat} />
+        <BenficiaryContainer
+          currentChat={currentChat}
+          socket={socket}
+          currentUser={currentUser}
+        />
       </div>
     </div>
   );

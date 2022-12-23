@@ -49,8 +49,8 @@ const index = () => {
           <form
             id="registerform"
             className="flex flex-col gap-2 p-4"
-            autoSave={false}
-            autoComplete={false}
+            autoSave="off"
+            autoComplete="off"
           >
             <label>Enter your Full Name</label>
             <input type="text" placeholder="Full Name" />

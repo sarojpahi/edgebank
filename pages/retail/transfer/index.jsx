@@ -49,7 +49,7 @@ const Transfer = () => {
           </form>
         </div>
       </div>
-      <div className="lg:w-[49%] w-full p-4 border rounded-lg shadow-lg border-[#d7dfe5]">
+      <div className="lg:w-[49%] relative w-full p-4 border rounded-lg shadow-lg border-[#d7dfe5]">
         <div className="w-full">
           <h1 className="text-xl text-center">My Beneficiaries</h1>
         </div>
@@ -59,8 +59,10 @@ const Transfer = () => {
           ))}
         </div>
         <Link href={"/retail/transfer/beneficiary"}>
-          <div className="border w-full text-center py-[6px] px-3 border-[#d7dfe5] bg-[#d7dfe5] hover:bg-[#c2c8cd] rounded-md transition-all duration-300">
-            All Beneficiaries
+          <div className=" w-full">
+            <div className="border  w-full text-center py-[6px] px-3 border-[#d7dfe5] bg-[#d7dfe5] hover:bg-[#c2c8cd] rounded-md transition-all duration-300">
+              All Beneficiaries
+            </div>
           </div>
         </Link>
       </div>

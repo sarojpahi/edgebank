@@ -1,20 +1,68 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import { Message } from "./Message";
 
-export const BenficiaryContainer = ({ setInput, currentChat }) => {
+export const BenficiaryContainer = ({ currentChat, currentUser, socket }) => {
   const [show, setShow] = useState(true);
-  const [inputdata, setInputdata] = useState("");
+  const [sendmsg, setSendMsg] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessgae] = useState();
+
+  const scrollref = useRef();
+
   const handleChange = (e) => {
     console.log(+e.target.value);
     if (+e.target.value) setShow(true);
     else setShow(false);
-    setInputdata(e.target.value);
+    setSendMsg(e.target.value);
   };
-  const handleChat = () => {
-    setInput(inputdata);
-    setInputdata("");
+
+  useEffect(async () => {
+    if (currentChat) {
+      const res = await axios.get("/api/accounts/messages", {
+        from: currentUser._id,
+        to: currentChat._id,
+      });
+      setMessages(res.data);
+    }
+  }, [currentChat]);
+
+  const handleMessage = async () => {
+    await axios.post("/api/accounts/messages", {
+      text: sendmsg,
+      to: currentChat._id,
+      from: currentUser._id,
+    });
+    socket.current.emit("send-msg", {
+      text: sendmsg,
+      to: currentChat._id,
+      from: currentUser._id,
+    });
+    const msgs = [...messages];
+    msgs.push({
+      fromself: true,
+      message: sendmsg,
+    });
+    setMessages(msgs);
   };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-recieve", (msg) => {
+        setArrivalMessgae({ fromself: false, message: msg });
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    scrollref.current?.scrollintoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <>
       {currentChat ? (
@@ -44,7 +92,7 @@ export const BenficiaryContainer = ({ setInput, currentChat }) => {
             </div>
           </div>
           <div className="chatbox scrollconfig px-[50px] py-[30px]">
-            <Message />
+            <Message messages={messages} />
           </div>
 
           <div className="bg-white w-full h-[60px]">
@@ -53,11 +101,11 @@ export const BenficiaryContainer = ({ setInput, currentChat }) => {
                 className="h-full w-[90%] p-[15px] outline-none"
                 type="text"
                 placeholder="Enter Amount or Chat"
-                value={inputdata}
+                value={sendmsg}
                 onChange={handleChange}
               />
               <div
-                onClick={handleChat}
+                onClick={handleMessage}
                 className="border border-[#d7dfe5] bg-[#d7dfe5] hover:bg-[#c6cdd2] px-3 py-2 rounded-md w-[70px] text-center transition-all duration-300 cursor-pointer mr-2"
               >
                 {show ? "Pay" : "Send"}
