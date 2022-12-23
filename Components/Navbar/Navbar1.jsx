@@ -1,35 +1,56 @@
-import React from "react";
-import { Navicon } from "./Navicon";
-import { FaRegUser } from "react-icons/fa";
-import { MdAccountBalanceWallet, MdOutlineWifiCalling3 } from "react-icons/md";
-import { RiLogoutCircleRLine } from "react-icons/ri";
-import { BiTransferAlt } from "react-icons/bi";
-import Link from "next/link";
+import React, { useEffect, useState } from 'react'
+import { Navicon } from './Navicon'
+import { FaRegUser } from 'react-icons/fa'
+import { MdAccountBalanceWallet, MdOutlineWifiCalling3 } from 'react-icons/md'
+import { RiLogoutCircleRLine } from 'react-icons/ri'
+import { BiTransferAlt } from 'react-icons/bi'
+import Link from 'next/link'
+
+// const fetchUser = async () => {
+//   return fetch('/api/users/getuser', {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+// }
+
 const Navbar = () => {
+  const [user, setUser] = useState({})
+  // useEffect(() => {
+  //   fetchUser()
+  //     .then((res) => {
+  //       res.json()
+  //     })
+  //     .then((res) => {
+  //       console.log(res)
+  //       setUser(res)
+  //     })
+  //     .catch((err) => console.log(err))
+  // }, [])
   return (
     <div className="h-[60px] flex items-center px-10 bg-gradient-to-r from-indigo-200 via-purple-500 to-pink-500">
       <div className="lg:px-4 lg:w-max w-full flex justify-center ">
-        <Link href={"/"}>
+        <Link href={'/'}>
           <img
             className="w-[160px] "
             src="https://user-images.githubusercontent.com/107534043/208931176-27398e7e-6d50-4729-8415-8e0403eaac57.png"
             alt="Edge Bank"
           />
         </Link>
-
       </div>
       <div className="hidden lg:flex w-[calc(100%-186px)]">
         <div className="w-full gap-3 items-center justify-between px-4 lg:px-40 flex">
           <Link href="/retail/profile">
             <Navicon icon={<FaRegUser />} title="Profile" />
           </Link>
-          <Link href={"/retail/account"}>
+          <Link href={'/retail/account'}>
             <Navicon icon={<MdAccountBalanceWallet />} title="Account" />
           </Link>
-          <Link href={"/retail/transfer"}>
+          <Link href={'/retail/transfer'}>
             <Navicon icon={<BiTransferAlt />} title="Transfer" />
           </Link>
-          <Link href={"/retail/enqueries"}>
+          <Link href={'/retail/enqueries'}>
             <Navicon icon={<MdOutlineWifiCalling3 />} title="Enqueries" />
           </Link>
         </div>
@@ -48,7 +69,7 @@ const Navbar = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

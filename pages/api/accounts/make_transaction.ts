@@ -4,7 +4,7 @@ import {
   ExtendedNextAPIRequest,
 } from '../../../middlewares/verifyUser'
 import { v4 as uuidv4 } from 'uuid'
-import { AccountTransections } from '../../../models/userTransections.model'
+import { AccountTransactions } from '../../../models/userTransactions.model'
 import {
   AccountDetails,
   AccountDetailsType,
@@ -24,10 +24,13 @@ const handler = async (req: ExtendedNextAPIRequest, res: NextApiResponse) => {
       const accountSBalance = (await AccountDetails.findOne({
         user: req.userId,
       })) as AccountDetailsType
+
       const accountRBalance = (await AccountDetails.findOne({
         user: receiverId,
       })) as AccountDetailsType
-      const transectionId: string = uuidv4()
+
+      let transactionId: string = uuidv4()
+      transactionId = transactionId.slice(0, 18).replaceAll('-', '')
       if (amount > accountSBalance.balance) {
         return res.status(500).json({
           status: 0,
@@ -35,30 +38,36 @@ const handler = async (req: ExtendedNextAPIRequest, res: NextApiResponse) => {
         })
       } else {
         //.....
-        await AccountTransections.create({
+        await AccountTransactions.create({
           user: req.userId,
-          transectionId,
-          'transection.sender': req.userId,
-          'transection.receiver': receiverId,
-          'transection.debit': amount,
+          transactionId,
+          'transaction.sender': req.userId,
+          'transaction.receiver': receiverId,
+          'transaction.debit': amount,
+          balance: accountSBalance.balance - amount,
         })
         //.....
-        await AccountTransections.create({
+        await AccountTransactions.create({
           user: receiverId,
-          transectionId,
-          'transection.sender': req.userId,
-          'transection.receiver': receiverId,
-          'transection.credit': amount,
+          transactionId,
+          'transaction.sender': req.userId,
+          'transaction.receiver': receiverId,
+          'transaction.credit': amount,
+          balance: accountRBalance.balance + amount,
         })
         //...
-        AccountDetails.updateOne(
+        await AccountDetails.updateOne(
           { user: req.userId },
           { $set: { balance: accountSBalance.balance - amount } },
         )
-        AccountDetails.updateOne(
+        await AccountDetails.updateOne(
           { user: receiverId },
           { $set: { balance: accountRBalance.balance + amount } },
         )
+        return res.status(200).json({
+          status: 1,
+          transactionId,
+        })
       }
     } catch (error) {
       return res.status(500).json({

@@ -16,15 +16,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { userName, password } = req.body
+  const { email, password } = req.body
   try {
     await dbConnect()
     if (req.method === 'POST') {
-      const existing = await Users.findOne({ userName })
+      const existing = await Users.findOne({ email })
       if (await argon.verify(existing.password, password)) {
         if (await argon.verify(existing.password, password)) {
           const verification = jwt.sign(
-            { userName, userId: existing._id, email: existing.email },
+            {
+              userName: existing.userName,
+              userId: existing._id,
+              email: existing.email,
+            },
             process.env.JWT_SECRET,
             { expiresIn: '30 mins' },
           )
