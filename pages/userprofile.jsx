@@ -10,7 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function UserProfile() {
   const [form, setForm] = useState({
@@ -20,10 +20,22 @@ function UserProfile() {
     pin: "",
     email: "",
     houseDetails: "",
+    image: ""
   });
-  const [image, setImage] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [loading, setloading] = useState(false);
+
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+
+  const getData = () => {
+    axios.get(`/api/users/getuser`)
+      .then(res => setData(res.data))
+      .catch(e => console.log(e.message))
+  }
 
   const handleChangeImage = (e) => {
     const data = new FormData();
@@ -34,7 +46,7 @@ function UserProfile() {
     axios
       .post(`https://api.cloudinary.com/v1_1/dhxtxmw5n/image/upload`, data)
       .then((res) => {
-        setImage(res.data.url);
+        setForm({ ...form, [e.target.name]: res.data.url })
         setloading(false);
       })
       .catch((err) => console.log(err));
@@ -45,7 +57,9 @@ function UserProfile() {
   };
 
   const handleUpdate = () => {
-    // axios.post;
+    axios.patch(`/api/user_auth/register`, form)
+      .then(res => setData(res.data))
+      .catch(e => console.log(e.message))
   };
 
   return (
@@ -63,7 +77,8 @@ function UserProfile() {
           />
           <Input
             type="file"
-            value={image}
+            name='image'
+            value={form.image}
             onChange={(e) => handleChangeImage(e)}
           />
         </VStack>
