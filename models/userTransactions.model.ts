@@ -1,6 +1,6 @@
 import { Schema, models, model } from 'mongoose'
 
-export type TransectionType = {
+export type TransactionType = {
   credit: number
   debit: number
   sender: String
@@ -9,8 +9,9 @@ export type TransectionType = {
 
 export type AccountDetailsType = {
   user: String
-  transectionId: String
-  transection: TransectionType
+  transactionId: String
+  transaction: TransactionType
+  balance: number
 }
 
 const accountsSchema = new Schema<AccountDetailsType>({
@@ -19,8 +20,8 @@ const accountsSchema = new Schema<AccountDetailsType>({
     ref: 'user',
     required: true,
   },
-  transectionId: String,
-  transection: {
+  transactionId: String,
+  transaction: {
     credit: Number,
     debit: Number,
     sender: {
@@ -34,9 +35,10 @@ const accountsSchema = new Schema<AccountDetailsType>({
       required: true,
     },
   },
+  balance: Number,
 })
 
-const AccountTransections =
-  models.transection || model('transection', accountsSchema)
+const AccountTransactions =
+  models.transaction || model('transaction', accountsSchema)
 
-export { AccountTransections }
+export { AccountTransactions }

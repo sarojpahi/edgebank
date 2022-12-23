@@ -4,23 +4,21 @@ import {
   ExtendedNextAPIRequest,
 } from '../../../middlewares/verifyUser'
 import dbConnect from '../../../utils/db'
-import { AccountTransactions } from '../../../models/userTransactions.model'
+import { AccountDetails } from '../../../models/userAccount.model'
 
 const handler = async (req: ExtendedNextAPIRequest, res: NextApiResponse) => {
   const { method } = req
   if (method === 'GET') {
     try {
+      console.log(req.userId)
       await dbConnect()
-      const existingAccount = await AccountTransactions.find({
+      const existingAccount = await AccountDetails.findOne({
         user: req.userId,
-      }).populate([
-        { path: 'transaction.receiver', select: ['userName'] },
-        { path: 'transaction.sender', select: ['userName'] },
-      ])
+      })
       if (existingAccount) {
         res.status(200).json({
           status: 1,
-          accountDetails: existingAccount,
+          userAccount: existingAccount,
         })
       } else {
         return res.status(401).json({
