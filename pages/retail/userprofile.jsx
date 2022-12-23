@@ -8,128 +8,131 @@ import {
   HStack,
   Input,
   VStack,
-} from "@chakra-ui/react";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+} from '@chakra-ui/react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 function UserProfile() {
   const [form, setForm] = useState({
-    userName: "",
-    city: "",
-    state: "",
-    pin: "",
-    email: "",
-    houseDetails: "",
-    image: ""
-  });
-  const [data, setData] = useState({});
-  const [loading, setloading] = useState(false);
+    userName: '',
+    city: '',
+    state: '',
+    pin: '',
+    email: '',
+    houseDetails: '',
+    image: '',
+  })
+  const [data, setData] = useState({})
+  const [loading, setloading] = useState(false)
 
   useEffect(() => {
     getData()
   }, [])
 
-
   const getData = () => {
-    axios.get(`/api/users/getuser`)
-      .then(res => setData(res.data))
-      .catch(e => console.log(e.message))
+    axios
+      .get(`/api/users/getuser`)
+      .then((res) => setData(res.data.user))
+      .catch((e) => console.log(e.message))
   }
 
   const handleChangeImage = (e) => {
-    const data = new FormData();
-    data.append("file", e.target.files[0]);
-    data.append("upload_preset", "Facebook");
-    data.append("cloud_name", "dhxtxmw5n");
-    setloading(true);
+    const data = new FormData()
+    data.append('file', e.target.files[0])
+    data.append('upload_preset', 'Facebook')
+    data.append('cloud_name', 'dhxtxmw5n')
+    setloading(true)
     axios
       .post(`https://api.cloudinary.com/v1_1/dhxtxmw5n/image/upload`, data)
       .then((res) => {
         setForm({ ...form, [e.target.name]: res.data.url })
-        setloading(false);
+        setloading(false)
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
 
   const handleUpdate = () => {
-    axios.patch(`/api/user_auth/register`, form)
-      .then(res => setData(res.data))
-      .catch(e => console.log(e.message))
-  };
+    axios
+      .patch(`/api/user_auth/register`, form)
+      .then((res) => setData(res.data))
+      .catch((e) => console.log(e.message))
+  }
 
   return (
     <Box mt="10" pb="10">
       <Grid
-        gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
+        gridTemplateColumns={['1fr', '1fr', '1fr 1fr']}
         w="80%"
         m="auto"
         h="90vh"
       >
         <VStack h="full" px="20">
-          <Avatar
-            size="3xl"
-            src={data?.image}
-          />
+          <Avatar size="3xl" src={data?.image} />
           <Input
             type="file"
-            name='image'
+            name="image"
             value={form.image}
             onChange={(e) => handleChangeImage(e)}
           />
         </VStack>
         <VStack h="full" align="start" px="10" py="0">
-          <Flex w="full" justifyContent={"center"}>
-            {" "}
+          <Flex w="full" justifyContent={'center'}>
+            {' '}
             <Heading
               align="center"
               color=" rgb(255, 50, 120)"
-              fontSize={"20px"}
-              letterSpacing={"16px"}
+              fontSize={'20px'}
+              letterSpacing={'16px'}
               fontWeight="500"
             >
               USER DETAILS
             </Heading>
           </Flex>
-          <VStack gap="2" pt="5" align={"start"}>
-            <Heading fontWeight={"500"} size="sm">
-              Name : <span style={{ fontWeight: "400" }}>{data?.userName}</span>
+          <VStack gap="2" pt="5" align={'start'}>
+            <Heading fontWeight={'500'} size="sm">
+              Name : <span style={{ fontWeight: '400' }}>{data?.userName}</span>
             </Heading>
-            <Heading fontWeight={"500"} size="sm">
-              Email :{" "}
-              <span style={{ fontWeight: "400" }}>
-                {data?.email}
-              </span>
+            <Heading fontWeight={'500'} size="sm">
+              Email : <span style={{ fontWeight: '400' }}>{data?.email}</span>
             </Heading>
-            <Heading fontWeight={"500"} size="sm">
-              Acc Number : <span style={{ fontWeight: "400" }}>{data?.accountNumber}</span>
+            <Heading fontWeight={'500'} size="sm">
+              Acc Number :{' '}
+              <span style={{ fontWeight: '400' }}>{data?.accountNumber}</span>
             </Heading>
-            <Heading fontWeight={"500"} size="sm">
-              Mobile Number :{" "}
-              <span style={{ fontWeight: "400" }}>{data?.mobile}</span>
+            <Heading fontWeight={'500'} size="sm">
+              Mobile Number :{' '}
+              <span style={{ fontWeight: '400' }}>{data?.mobile}</span>
             </Heading>
-            <Heading fontWeight={"500"} size="sm">
-              Aadhar Number :{" "}
-              <span style={{ fontWeight: "400" }}>{data?.aadhar}</span>
+            <Heading fontWeight={'500'} size="sm">
+              Aadhar Number :{' '}
+              <span style={{ fontWeight: '400' }}>{data?.aadhar}</span>
             </Heading>
             <HStack>
-              <Heading fontWeight={"500"} size="sm">
-                City : <span style={{ fontWeight: "400" }}>{data?.address?.city}</span>
+              <Heading fontWeight={'500'} size="sm">
+                City :{' '}
+                <span style={{ fontWeight: '400' }}>{data?.address?.city}</span>
               </Heading>
-              <Heading fontWeight={"500"} size="sm">
-                pin : <span style={{ fontWeight: "400" }}>{data?.address?.pin}</span>
+              <Heading fontWeight={'500'} size="sm">
+                pin :{' '}
+                <span style={{ fontWeight: '400' }}>{data?.address?.pin}</span>
               </Heading>
             </HStack>
             <HStack>
-              <Heading fontWeight={"500"} size="sm">
-                State : <span style={{ fontWeight: "400" }}>{data?.address?.state}</span>
+              <Heading fontWeight={'500'} size="sm">
+                State :{' '}
+                <span style={{ fontWeight: '400' }}>
+                  {data?.address?.state}
+                </span>
               </Heading>
-              <Heading fontWeight={"500"} size="sm">
-                HouseDetails :{" "}
-                <span style={{ fontWeight: "400" }}>{data?.address?.houseDetails}</span>
+              <Heading fontWeight={'500'} size="sm">
+                HouseDetails :{' '}
+                <span style={{ fontWeight: '400' }}>
+                  {data?.address?.houseDetails}
+                </span>
               </Heading>
             </HStack>
           </VStack>
@@ -191,21 +194,21 @@ function UserProfile() {
               w="full"
               bgColor="rgba(255, 49, 109, 0.7)"
               size="sm"
-              _hover={{ bgColor: "rgba(255, 49, 109, 0.7)" }}
-              letterSpacing={"1.3px"}
+              _hover={{ bgColor: 'rgba(255, 49, 109, 0.7)' }}
+              letterSpacing={'1.3px'}
               fontWeight="500"
               fontSize="14px"
               color="white"
               onClick={() => handleUpdate()}
             >
-              {" "}
+              {' '}
               Update profile
             </Button>
           </VStack>
         </VStack>
       </Grid>
     </Box>
-  );
+  )
 }
 
-export default UserProfile;
+export default UserProfile
