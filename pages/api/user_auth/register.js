@@ -22,22 +22,21 @@ export default async function handler(req, res) {
             text: 'Please verify your email by entering this verification code in your browser!',
             html: `<p>OTP for email verification: ${random}</p>`
           })
-          await OtpVerification.create({ email, otp: random });
+          const hash = await argon.hash(password);
+          await OtpVerification.create({ email, userName, mobile, dob, otp: random, password: hash, aadhar: aadhar });
           return res.status(200).json({
             status: 1,
             message: 'otp has been sent!'
           })
         } else if (verification) {
-          const existing = await OtpVerification.findOne({ email });
+          const existing = await OtpVerification.findOne({ otp: String(verificationOtp) });
           if (existing) {
             if (existing.otp == verificationOtp) {
-              await OtpVerification.deleteOne({ email })
-              const hash = await argon.hash(password);
-              await Users.create({ email, userName, password: hash, aadhar: +aadhar })
-              const newUser = await Users.findOne({ email, userName })
+              const newUser = await Users.create({ email: existing.email, userName: existing.userName, password: existing.password, mobile: existing.mobile, aadhar: existing.aadhar })
               await AccountDetails.create({ user: newUser._id, balance: 0 })
+              await OtpVerification.deleteOne({ email: newUser.email })
               return res.status(201).json({
-                status: 0,
+                status: 1,
                 message: 'User has been created!'
               })
             } else {
@@ -100,5 +99,3 @@ export default async function handler(req, res) {
     console.log(error);
   }
 }
-
-
