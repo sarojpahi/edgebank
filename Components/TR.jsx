@@ -6,7 +6,8 @@ export const TR = ({ status, name, id, amount, balance }) => {
       ? "bg-green-100 border-green-200"
       : "bg-red-100 border-red-200";
   return (
-    <tr className={`border-b ${color}`}>
+
+    <tr className={`${color}`}>
       <td className="text-sm text-gray-900 font-medium px-2 py-4 whitespace-nowrap">
         {id}
       </td>
