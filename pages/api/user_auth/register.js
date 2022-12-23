@@ -7,17 +7,17 @@ import { AccountDetails } from '../../../models/userAccount.model'
 
 
 export default async function handler(req, res) {
-  const { userName, email, mobile, dob, password, aadhar, verificationRequest, verification, verificationOtp } = req.body;
+  const { userName, email, password, aadhar, verificationRequest, verification, verificationOtp } = req.body;
   try {
     await dbConnect();
     if (req.method === "POST") {
-      let existing = await Users.findOne({ email })
+      let existing = await Users.findOne({ email, userName })
       if (!existing) {
         if (verificationRequest) {
           const random = Math.floor(1 + Math.random() * 1000000)
           await transporter.sendMail({
             ...mailOptions,
-            to: email,
+            to: 'shrikantjawla@gmail.com',
             subject: 'Email Verification',
             text: 'Please verify your email by entering this verification code in your browser!',
             html: `<p>OTP for email verification: ${random}</p>`
