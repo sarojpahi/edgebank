@@ -7,11 +7,11 @@ import "../styles/global.css";
 export default function App({ Component, pageProps }) {
   return (
 
-    <Layout>
+    // <Layout>
       <ChakraProvider>
         <Component {...pageProps} />
       </ChakraProvider>
-    </Layout>
+    // </Layout>
 
   );
 }

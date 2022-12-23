@@ -5,9 +5,9 @@ import {
   IconButton,
   Button,
   Stack,
+  Link,
   Collapse,
   Icon,
-  Link,
   Image,
   Popover,
   PopoverTrigger,
@@ -17,6 +17,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FaUserCircle } from "react-icons/fa";
+// import Link from "next/link";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -76,9 +77,11 @@ export default function Nav() {
           borderRadius="30px"
           align="center"
         >
-          <Text color="white" fontSize="15px" fontWeight="600" fontFamily="">
-            Sign In
-          </Text>
+          <Link href="/login">
+            <Text color="white" fontSize="15px" fontWeight="600" fontFamily="">
+              Sign In
+            </Text>
+          </Link>
           <Box ml=".5rem">
             <FaUserCircle color="white" fontSize="24px" />
           </Box>
@@ -244,13 +247,6 @@ const MobileNavItem = ({ label, children, href }) => {
     </Stack>
   );
 };
-
-// interface NavItem {
-//   label: string;
-//   subLabel?: string;
-//   children?: Array<NavItem>;
-//   href?: string;
-// }
 
 const NAV_ITEMS = [
   {
