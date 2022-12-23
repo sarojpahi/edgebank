@@ -25,7 +25,6 @@ function UserProfile() {
   const [data, setData] = useState({});
   const [loading, setloading] = useState(false);
 
-
   useEffect(() => {
     getData()
   }, [])
@@ -73,7 +72,7 @@ function UserProfile() {
         <VStack h="full" px="20">
           <Avatar
             size="3xl"
-            src="https://avatars.githubusercontent.com/u/107462720?v=4"
+            src={data?.image}
           />
           <Input
             type="file"
@@ -97,40 +96,40 @@ function UserProfile() {
           </Flex>
           <VStack gap="2" pt="5" align={"start"}>
             <Heading fontWeight={"500"} size="sm">
-              Name : <span style={{ fontWeight: "400" }}>Akshay Rajput</span>
+              Name : <span style={{ fontWeight: "400" }}>{data?.userName}</span>
             </Heading>
             <Heading fontWeight={"500"} size="sm">
               Email :{" "}
               <span style={{ fontWeight: "400" }}>
-                akshay.rajput1197@gmail.com
+                {data?.email}
               </span>
             </Heading>
             <Heading fontWeight={"500"} size="sm">
-              Acc Number : <span style={{ fontWeight: "400" }}>123456789</span>
+              Acc Number : <span style={{ fontWeight: "400" }}>{data?.accountNumber}</span>
             </Heading>
             <Heading fontWeight={"500"} size="sm">
               Mobile Number :{" "}
-              <span style={{ fontWeight: "400" }}>124324234</span>
+              <span style={{ fontWeight: "400" }}>{data?.mobile}</span>
             </Heading>
             <Heading fontWeight={"500"} size="sm">
               Aadhar Number :{" "}
-              <span style={{ fontWeight: "400" }}>124324234</span>
+              <span style={{ fontWeight: "400" }}>{data?.aadhar}</span>
             </Heading>
             <HStack>
               <Heading fontWeight={"500"} size="sm">
-                City : <span style={{ fontWeight: "400" }}>address</span>
+                City : <span style={{ fontWeight: "400" }}>{data?.address?.city}</span>
               </Heading>
               <Heading fontWeight={"500"} size="sm">
-                pin : <span style={{ fontWeight: "400" }}>address</span>
+                pin : <span style={{ fontWeight: "400" }}>{data?.address?.pin}</span>
               </Heading>
             </HStack>
             <HStack>
               <Heading fontWeight={"500"} size="sm">
-                State : <span style={{ fontWeight: "400" }}>address</span>
+                State : <span style={{ fontWeight: "400" }}>{data?.address?.state}</span>
               </Heading>
               <Heading fontWeight={"500"} size="sm">
                 HouseDetails :{" "}
-                <span style={{ fontWeight: "400" }}>address</span>
+                <span style={{ fontWeight: "400" }}>{data?.address?.houseDetails}</span>
               </Heading>
             </HStack>
           </VStack>
