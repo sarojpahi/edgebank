@@ -1,7 +1,7 @@
-import Head from "next/head";
-import Navbar from "../Navbar/Navbar1";
+import Head from 'next/head'
+import Navbar from '../Navbar/Navbar1'
 
-export default function Layout({ children }) {
+export default function Layout({ children, user, logout }) {
   return (
     <>
       <Head>
@@ -10,8 +10,8 @@ export default function Layout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Navbar />
+      <Navbar user={user} logout={logout} />
       <main>{children}</main>
     </>
-  );
+  )
 }

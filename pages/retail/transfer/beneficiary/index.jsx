@@ -1,41 +1,42 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { BenificiaryList } from './BenificiaryList'
+import { io } from 'socket.io-client'
 import { BenficiaryContainer } from './BenficiaryContainer'
-const random_bg_color = () => {
-  var x = Math.floor(Math.random() * 256)
-  var y = Math.floor(Math.random() * 256)
-  var z = Math.floor(Math.random() * 256)
-  var bgColor = 'rgb(' + x + ',' + y + ',' + z + ')'
+import { BenificiaryList } from './BenificiaryList'
 
-  return bgColor
+const fetchData = () => {
+  return axios.get('/api/users/getuser')
 }
-const data = [
-  {
-    name: 'Saroj',
-    avatar: '',
-    bg: random_bg_color(),
-  },
-  {
-    name: 'Pankaj',
-    avatar: '',
-    bg: random_bg_color(),
-  },
-  {
-    name: 'Aman',
-    avatar: '',
-    bg: random_bg_color(),
-  },
-]
-const index = () => {
-  const [input, setInput] = useState('')
 
+const Beneficiary = () => {
+  const socket = useRef()
   const [currentChat, setCurrentChat] = useState()
+  const [data, setData] = useState([])
+  const [currentUser, setCurrentuser] = useState({
+    _id: '',
+  })
+
+  useEffect(() => {
+    fetchData()
+      .then(({ data }) => {
+        setCurrentuser(data.user._id)
+        setData(data.user.beneficiary)
+      })
+      .catch((err) => console.log(err))
+  }, [])
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat)
     console.log('chat', chat)
   }
+
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io('/api/socket')
+      socket.current.emit('add-user', currentUser._id)
+    }
+  }, [currentUser])
+
   console.log('currentChat', currentChat)
   return (
     <div id="payment">
@@ -51,10 +52,14 @@ const index = () => {
           </div>
           <BenificiaryList changeChat={handleChatChange} contacts={data} />
         </div>
-        <BenficiaryContainer setInput={setInput} currentChat={currentChat} />
+        <BenficiaryContainer
+          currentChat={currentChat}
+          socket={socket}
+          currentUser={currentUser}
+        />
       </div>
     </div>
   )
 }
 
-export default index
+export default Beneficiary
