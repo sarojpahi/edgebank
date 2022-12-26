@@ -8,17 +8,20 @@ import dbConnect from '../../../utils/db'
 
 const handler = async (req: ExtendedNextAPIRequest, res: NextApiResponse) => {
   const { method, body } = req
-  const { email, userName, mobile } = body
+  const { userName, accountNumber } = body
   if (method === 'POST') {
     await dbConnect()
     try {
-      const userToBeAdded = await Users.findOne({ email, userName, mobile })
+      const userToBeAdded = await Users.findOne({
+        userName,
+        accountNumber,
+      })
       const loginedUser = await Users.findOne({ _id: req.userId })
       if (loginedUser) {
-        if (!loginedUser.beneficiary.includes(userToBeAdded.userId)) {
+        if (!loginedUser.beneficiary.includes(userToBeAdded._id)) {
           await Users.updateOne(
             { _id: req.userId },
-            { $push: { beneficiary: userToBeAdded.userId } },
+            { $push: { beneficiary: userToBeAdded._id } },
           )
           return res.status(200).json({
             status: 1,
