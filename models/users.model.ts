@@ -40,7 +40,7 @@ const userSchema = new Schema<UserType>({
   },
   image: String,
   blackList: [String],
-  beneficiary: [String],
+  beneficiary: [{ type: Schema.Types.ObjectId, ref: 'user', default: [] }],
 })
 
 const Users = models.user || model('user', userSchema)

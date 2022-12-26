@@ -32,7 +32,9 @@ function UserProfile() {
   const getData = () => {
     axios
       .get(`/api/users/getuser`)
-      .then((res) => setData(res.data.user))
+      .then((res) => {
+        setData(res.data.user)
+      })
       .catch((e) => console.log(e.message))
   }
 
